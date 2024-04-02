@@ -40,3 +40,88 @@
 * [Task Constructors](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task.-ctor?view=net-8.0#system-threading-tasks-task-ctor(system-action))
 
 * [training dotnet maui](https://learn.microsoft.com/ko-kr/training/browse/?expanded=dotnet&products=dotnet-maui)
+
+
+## Process
+
+* Development without MVVM & Data Binding
+	1. MainPage.xaml: add x:Name in controls
+	    ```csharp
+	    <Entry x:Name="EntryFirst" Placeholder="First name"/>
+        <Entry x:Name="EntryLast" Placeholder="Last name"/>
+            
+        <Label x:Name="LabelFullName"/>
+            
+        <Button                
+            Text="Click me"             
+            HorizontalOptions="Center" />
+	    ```
+	2. MainPage.xaml.cs: add Method
+        ```csharp
+        void UpdateLabel()
+        {
+            LabelFullName.Text = $"{EntryFirst.Text} {EntryLast.Text}";
+        }
+        ```
+    3. register an Event handler to an event      
+        1. (from Code)MainPage.xaml.cs: Omit this and replace with xaml
+        ```csharp
+        public MainPage()
+        {
+            InitializeComponent();
+            EntryFirst.TextChanged += EntryFirst_TextChanged;
+        }
+        ```
+        2. (from xaml)MainPage.xaml: select 'new event handler' from "TextChanged=" -> auto Generate "EntryFirst_TextChanged" and "EntryLast_TextChanged" Event in MainPage.xaml.cs
+        ```csharp
+        <Entry x:Name="EntryFirst" Placeholder="First name"
+                TextChanged="EntryFirst_TextChanged"/>
+        <Entry x:Name="EntryLast" Placeholder="Last name"
+                TextChanged="EntryLast_TextChanged"/>
+        ```
+        3. (from Code)MainPage.xaml.cs: add Code in TextChanged()
+        ```csharp
+        private void EntryFirst_TextChanged(object? sender, TextChangedEventArgs e)
+         {
+            UpdateLabel();
+          }
+          private void EntryLast_TextChanged(object sender, TextChangedEventArgs e)
+          {
+            UpdateLabel();
+          }
+        ```
+        4. (from xaml)MainPage.xaml: add Clicked in Button
+        ```csharp
+        <Button                
+                Text="Click me"             
+                HorizontalOptions="Center"
+                Clicked="Button_Clicked"/>
+        ```
+        5. (from Code)MainPage.xaml.cs: add Code in Button_Clicked()
+        ```csharp
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            Console.WriteLine(LabelFullName.Text);
+        }
+        ```
+        6. (from xaml)MainPage.xaml: add x:Name in Button
+        ```csharp
+        <Button
+                x:Name="ButtonTest"
+                Text="Click me"             
+                HorizontalOptions="Center"
+                Clicked="Button_Clicked"/>
+        ```
+        7. (from Code)MainPage.xaml.cs: add "ButtonTest.IsEnabled ="
+        ```csharp
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            ButtonTest.IsEnabled = false;
+
+            Console.WriteLine(LabelFullName.Text);
+
+            ButtonTest.IsEnabled = true;
+          }
+        ```
+    
+		

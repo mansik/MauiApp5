@@ -9,13 +9,18 @@
             Spacing="25"
             VerticalOptions="Center">
 
-            <Entry Placeholder="First name"/>
-            <Entry Placeholder="Last name"/>
-            <Label />
+            <Entry x:Name="EntryFirst" Placeholder="First name"
+                   TextChanged="EntryFirst_TextChanged"/>
+            <Entry x:Name="EntryLast" Placeholder="Last name"
+                   TextChanged="EntryLast_TextChanged"/>
             
-            <Button                
+            <Label x:Name="LabelFullName"/>
+            
+            <Button
+                x:Name="ButtonTest"
                 Text="Click me"             
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center"
+                Clicked="Button_Clicked"/>
         </VerticalStackLayout>
     </ScrollView>
 
